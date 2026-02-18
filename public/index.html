@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <title>ប្រព័ន្ធគ្រប់គ្រងបុគ្គលិក</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chenla&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Moul&family=Moulpali&family=Siemreap&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <h1 class="main-header">ប្រព័ន្ធគ្រប់គ្រងបុគ្គលិក</h1>
+
+    <div id="toast">រក្សាទុកជោគជ័យ!</div>
+
+    <div class="container">
+        <div class="card">
+            <h2>ចុះឈ្មោះបុគ្គលិក</h2>
+            <form id="employeeForm">
+                <label>ឈ្មោះពេញ:</label>
+                <input type="text" name="name" id="name" placeholder="ឧទាហរណ៍៖ សុខ ចាន់" required>
+
+                <label>ប្រាក់ខែ:</label>
+                <input type="number" name="salary" id="salary" step="0.01" placeholder="ឧទាហរណ៍: 500" required>
+
+                <label>ថ្ងៃចូលធ្វើការ:</label>
+                <input type="date" name="join_date" id="join_date" required>
+                
+                <label>លេខទូរស័ព្ទ:</label>
+                <input type="text" name="phone" id="phone" placeholder="ឧទាហរណ៍៖ 012 345 678">
+                
+                <button type="submit">រក្សាទុកទិន្នន័យ</button>
+            </form>
+        </div>
+
+        <div class="table-container">
+            <h2 class="List-Name">បញ្ជីឈ្មោះបុគ្គលិកដែលបានបញ្ចូល</h2>
+            
+            <!-- កន្លែងដាក់ប៊ូតុងលុបនៅខាងក្រៅតារាង -->
+            <div style="display: flex; gap: 10px; margin-bottom: 15px; justify-content: space-between;">
+                <div style="display: flex; gap: 10px; width: 70%;">
+                    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="ស្វែងរកឈ្មោះបុគ្គលិកនៅទីនេះ..." style="width: 100%; margin: 0;">
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="printReport()" style="background-color: #007bff; width: auto; padding: 8px 20px; font-family: 'siemreap'; font-size: small; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        🖨 បោះពុម្ព
+                    </button>
+                    <button id="deleteSelectedBtn" onclick="deleteSelected()" style="background-color: #dc3545; width: auto; padding: 8px 20px; font-family: 'siemreap'; font-size: small; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        🗑 លុបដែលបានជ្រើស
+                    </button>
+                </div>
+            </div>
+        
+            <table id="staffTable">
+                <thead>
+                    <tr>
+                        <th class="checkbox-column">
+                            <input type="checkbox" id="selectAll" onclick="toggleAll()" class="selection-checkbox">
+                        </th>
+                        <th>ID</th>
+                        <th>ឈ្មោះពេញ</th>
+                        <th>ប្រាក់ខែ</th>
+                        <th>ថ្ងៃចូលធ្វើការ</th>
+                        <th>លេខទូរស័ព្ទ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- ទិន្នន័យនឹងត្រូវបានបង្ហាញនៅទីនេះ -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // ១. មុខងារបញ្ជូនទិន្នន័យ
+        document.getElementById('employeeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new URLSearchParams(new FormData(this));
+
+            fetch('/save', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.text())
+            .then(message => {
+                const toast = document.getElementById("toast");
+                toast.textContent = "រក្សាទុកជោគជ័យ!";
+                toast.className = "show";
+                setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+
+                this.reset();    
+                loadEmployees(); 
+            })
+            .catch(err => console.error(err));
+        });
+
+        // ២. មុខងារទាញទិន្នន័យមកបង្ហាញ
+        function loadEmployees() {
+            fetch('/employees')
+                .then(res => res.json())
+                .then(data => {
+                    const tbody = document.querySelector('#staffTable tbody');
+                    tbody.innerHTML = '';
+                    data.forEach(emp => {
+                        const tr = document.createElement('tr');
+                        tr.setAttribute('data-id', emp.id);
+                        tr.innerHTML = `
+                            <td class="checkbox-column">
+                                <input type="checkbox" class="employee-checkbox selection-checkbox" value="${emp.id}" onclick="updateSelectAll()">
+                            </td>
+                            <td>${emp.id}</td>
+                            <td>${emp.full_name}</td>
+                            <td>$${parseFloat(emp.salary).toFixed(2)}</td>
+                            <td>${new Date(emp.join_date).toLocaleDateString('km-KH')}</td>
+                            <td>${emp.phone || '-'}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                    
+                    // បិទ checkbox Select All
+                    document.getElementById('selectAll').checked = false;
+                })
+                .catch(err => console.error("Error:", err));
+        }
+
+        // ៣. មុខងារជ្រើសរើសទាំងអស់
+        function toggleAll() {
+            const selectAllCheckbox = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('.employee-checkbox');
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        }
+
+        // ៤. មុខងារធ្វើបច្ចុប្បន្នភាព Select All
+        function updateSelectAll() {
+            const selectAllCheckbox = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('.employee-checkbox');
+            const checkedBoxes = document.querySelectorAll('.employee-checkbox:checked');
+            
+            if (checkboxes.length === checkedBoxes.length) {
+                selectAllCheckbox.checked = true;
+            } else {
+                selectAllCheckbox.checked = false;
+            }
+        }
+
+        // ៥. មុខងារលុបទិន្នន័យដែលបានជ្រើស
+        function deleteSelected() {
+            const checkboxes = document.querySelectorAll('.employee-checkbox:checked');
+            
+            if (checkboxes.length === 0) {
+                alert("សូមជ្រើសរើសបុគ្គលិកដែលអ្នកចង់លុប!");
+                return;
+            }
+            
+            if (confirm(`តើអ្នកពិតជាចង់លុបបុគ្គលិកចំនួន ${checkboxes.length} នាក់មែនទេ?`)) {
+                const deletePromises = [];
+                
+                checkboxes.forEach(checkbox => {
+                    const id = checkbox.value;
+                    deletePromises.push(
+                        fetch(`/delete/${id}`, { method: 'DELETE' })
+                            .then(res => res.text())
+                    );
+                });
+                
+                Promise.all(deletePromises)
+                    .then(() => {
+                        const toast = document.getElementById("toast");
+                        toast.textContent = `លុបទិន្នន័យបាន ${checkboxes.length} នាក់ជោគជ័យ!`;
+                        toast.className = "show";
+                        setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+                        
+                        loadEmployees();
+                    })
+                    .catch(err => {
+                        console.error("Error deleting:", err);
+                        alert("មានបញ្ហាក្នុងការលុបទិន្នន័យ។ សូមព្យាយាមម្តងទៀត!");
+                    });
+            }
+        }
+
+        // ៦. មុខងារស្វែងរកឈ្មោះ
+        function searchTable() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let rows = document.querySelectorAll("#staffTable tbody tr");
+            rows.forEach(row => {
+                let name = row.cells[2].innerText.toLowerCase(); // កែពី cells[1] ទៅ cells[2]
+                row.style.display = name.includes(input) ? "" : "none";
+            });
+        }
+
+        // ៧. មុខងារបោះពុម្ព
+        function printReport()  {
+            // បង្កើតផ្ទាំងថ្មីសម្រាប់បោះពុម្ព
+    const printContent = document.querySelector(".table-container").innerHTML;
+    const originalContent = document.body.innerHTML;
+
+    // រៀបចំទំព័រសម្រាប់បោះពុម្ព (លុបប៊ូតុងព្រីនចេញ កុំឱ្យវាជាប់មកជាមួយ)
+    document.body.innerHTML = `
+        <h1 style="text-align:center; font-family:'moul'; font-size: 20px; ">របាយការណ៍បញ្ជីឈ្មោះបុគ្គលិក</h1>
+        ${printContent}
+    `;
+            window.print(); 
+        }
+
+
+        // ៨. ផ្ទុកទិន្នន័យពេលបើកទំព័រ
+        document.addEventListener('DOMContentLoaded', loadEmployees);
+    </script>
+</body>
+</html>

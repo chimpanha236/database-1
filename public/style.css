@@ -1,0 +1,429 @@
+@import url('https://fonts.googleapis.com/css2?family=Chenla&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Moul&family=Moulpali&family=Siemreap&display=swap');
+
+/* រៀបចំផ្ទៃខាងក្រោយ */
+body { 
+    font-family: "siemreap", sans-serif; 
+    background-color: #f4f4f9; 
+    margin: 0;
+    padding: 20px;
+}
+
+/* ចំណងជើងធំនៅខាងលើបង្អស់ */
+.main-header {
+    text-align: center;
+    color: #4803f4;
+    font-weight: bold;
+    margin-bottom: 30px;
+    font-family: "moul";
+    width: 100%;
+    text-decoration: underline;
+}
+
+/* បង្កើត Container សម្រាប់បែងចែក ឆ្វេង-ស្តាំ */
+.container {
+    display: flex; 
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px; 
+    padding: 20px;
+    flex-wrap: nowrap; 
+}
+
+/* រចនាប័ទ្ម Card (ខាងឆ្វេង) */
+.card { 
+    background: white; 
+    padding: 25px; 
+    border-radius: 12px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+    width: 350px;
+    flex-shrink: 0;
+}
+.card h2 {
+    color: #4002fb;
+    font-family: "moul";
+    text-align: center;
+}
+
+/* រចនាប័ទ្ម តារាង (ខាងស្តាំ) */
+.table-container {
+    flex-grow: 1; 
+    max-width: 900px;
+    position: relative;
+}
+
+/* រចនាប្រអប់ស្វែងរកនិងប៊ូតុង */
+.search-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    flex-grow: 1;
+    min-width: 250px;
+}
+
+#searchInput {
+    width: 100%;
+    margin: 0;
+    padding: 10px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: "siemreap";
+    box-sizing: border-box;
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #28a745;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* រចនាប៊ូតុងទាំងអស់ */
+.btn {
+    padding: 8px 20px;
+    font-family: 'siemreap', sans-serif;
+    font-size: 14px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+    width: auto;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.btn-print {
+    background-color: #f35e00;
+}
+
+.btn-print:hover {
+    background-color: #f00202;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+}
+
+.btn-delete:hover {
+    background-color: #2904fa;
+}
+
+.btn-delete:disabled {
+    background-color: #e0a0a8;
+    cursor: not-allowed;
+}
+
+/* រចនាតារាង */
+table { 
+    width: 100%; 
+    background: white; 
+    border-radius: 10px; 
+    overflow: hidden; 
+    border-collapse: collapse; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    border: 1px solid black;
+}
+
+th, td { 
+    padding: 12px 15px; 
+    text-align: left; 
+    border-bottom: 1px solid #000000; 
+}
+
+th { 
+    background-color: #28a745; 
+    color: white; 
+    font-family: "moul";
+    font-size: 15px;
+    font-weight: normal;
+    text-align: left;
+}
+
+tr:hover { 
+    color: white;
+    background-color: rgba(2, 5, 192, 0.6); 
+}
+
+/* រចនាជួរឈរ Checkbox */
+.checkbox-column {
+    width: 50px;
+    text-align: center !important;
+}
+
+.selection-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    accent-color: #28a745;
+}
+
+/* រចនាជួរឈរ ID */
+.id-column {
+    width: 60px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* រចនាលេខទូរស័ព្ទ */
+.phone-number {
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+h2 { 
+    color: #4002fb; 
+    margin-top: 0; 
+    font-size: 20px; 
+}
+
+.List-Name {
+    color: #4002fb;
+    font-family: "moul";
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+label { 
+    font-weight: bold; 
+    color: #555; 
+    display: block; 
+    margin-top: 10px; 
+    font-family: "siemreap";
+    text-align: left;
+    text-decoration: underline;
+}
+
+input { 
+    width: 100%; 
+    padding: 10px; 
+    margin: 8px 0; 
+    border: 1px solid #ddd; 
+    border-radius: 6px; 
+    box-sizing: border-box; 
+    font-family: "siemreap";
+    text-align: left;
+}
+
+input:focus {
+    outline: none;
+    border-color: #28a745;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+}
+
+/* រចនាប៊ូតុងក្នុងទម្រង់ */
+button[type="submit"] { 
+    width: 100%; 
+    padding: 12px; 
+    background-color: #28a745; 
+    color: white; 
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-size: 16px; 
+    font-weight: bold;
+    margin-top: 15px;
+    font-family: "siemreap";
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover { 
+    background-color: #218838; 
+}
+
+/* --- Toast Notification --- */
+#toast {
+    visibility: hidden; 
+    min-width: 280px; 
+    background-color: #28a745; 
+    color: #fff;
+    text-align: center; 
+    border-radius: 0 0 12px 12px; 
+    padding: 16px;
+    position: fixed; 
+    z-index: 1000; 
+    left: 50%; 
+    top: 0; 
+    transform: translateX(-50%);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    font-family: "siemreap";
+}
+
+#toast.show { 
+    visibility: visible; 
+    animation: slidedown 0.5s, slideup 0.5s 2.5s forwards; 
+}
+
+@keyframes slidedown { 
+    from { 
+        top: -100px; 
+        opacity: 0; 
+    } 
+    to { 
+        top: 0; 
+        opacity: 1; 
+    } 
+}
+
+@keyframes slideup { 
+    from { 
+        top: 0; 
+        opacity: 1; 
+    } 
+    to { 
+        top: -100px; 
+        opacity: 0; 
+    } 
+}
+
+/* --- CSS សម្រាប់ពេលបោះពុម្ព (Print Mode) --- */
+@media print {
+    body { 
+        background: white; 
+        padding: 10px; 
+    }
+    
+    /* លាក់ផ្នែកមិនពាក់ព័ន្ធ */
+    .card, .main-header, #toast, .btn, .search-section, 
+    button, input, .button-group, .btn-print, .btn-delete, .List-Name { 
+        display: none !important; 
+    } 
+    
+    /* លាក់ Checkbox ពេលព្រីន */
+    .checkbox-column {
+        display: none !important;
+    }
+
+    .table-container { 
+        width: 100%; 
+        max-width: 100%;
+        padding: 0;
+    }
+
+    table { 
+        width: 100%; 
+        border: 2px solid black !important;
+        border-collapse: collapse;
+        box-shadow: none;
+    }
+
+    th, td { 
+        color: black !important; 
+        border: 1px solid black !important;
+        padding: 8px !important; 
+        line-height: 1.4; 
+        text-align: left; 
+        font-size: 12px; 
+    }
+
+    th { 
+        background-color: #eee !important; 
+        -webkit-print-color-adjust: exact; 
+        print-color-adjust: exact;
+        color: black !important;
+        font-weight: bold;
+    }  
+    
+    /* បង្ហាញតែជួរឈរសំខាន់ៗ */
+    th:nth-child(n+2), td:nth-child(n+2) {
+        display: table-cell;
+    }
+}
+
+/* --- Responsive Design --- */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-wrap: wrap;
+    }
+    
+    .card {
+        width: 100%;
+    }
+    
+    .table-container {
+        width: 100%;
+    }
+    
+    .search-section {
+        flex-direction: column;
+    }
+    
+    .button-group {
+        justify-content: stretch;
+    }
+    
+    .btn {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    /* លាក់ជួរឈរខ្លះពេលអេក្រង់តូច */
+    th:nth-child(4), td:nth-child(4), /* ប្រាក់ខែ */
+    th:nth-child(5), td:nth-child(5) { /* ថ្ងៃចូលធ្វើការ */
+        display: none;
+    }
+    
+    th, td {
+        padding: 10px 8px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* លាក់លេខទូរស័ព្ទពេលអេក្រង់តូចណាស់ */
+    th:nth-child(6), td:nth-child(6) {
+        display: none;
+    }
+    
+    th, td {
+        padding: 8px 5px;
+        font-size: 13px;
+    }
+    
+    .checkbox-column {
+        width: 30px;
+    }
+    
+    .selection-checkbox {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* រចនាចំនួនបុគ្គលិកដែលបានជ្រើស */
+.selection-info {
+    font-size: 13px;
+    color: #666;
+    margin-left: 10px;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* រចនាស្ថានភាពគ្មានទិន្នន័យ */
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: #999;
+    font-style: italic;
+}
+
+/* រចនាបន្ទាត់ពេលកំពុងផ្ទុក */
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #28a745;
+}
